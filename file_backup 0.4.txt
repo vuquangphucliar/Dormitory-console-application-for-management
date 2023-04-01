@@ -1,0 +1,712 @@
+using System;
+using System.Collections.Generic;
+using System.Data.SqlTypes;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.IO;
+using System.Dynamic;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Linq.Enumerable;
+using System.Threading;
+
+namespace Dormitory_console_0._0._2
+{
+    internal class Program
+    {
+        /// <summary>
+        /// read data from a file and return a array , can be also use for reload
+        /// read file -> big string -> separate Line -> separate comma -> create new arrayy and append data
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        static string[,] ReLoad_Read_file(string path)                      //{{{{ ReadLoad_read_file }}}}
+        {
+            string[] line, sv2;
+            //Create readstream
+            StreamReader read_file = new StreamReader(path);
+            string all_line = read_file.ReadToEnd().Trim();
+            read_file.Close();
+            //check data from file
+            if (all_line == "____________,_________,________,____________,____\r\n")
+            {
+                Console.WriteLine("Data empty !");
+            }
+            //Console.WriteLine(all_line); //checked
+            //Create array sv  is all line of this big string 
+            line = all_line.Split('\n');                                       //checked
+            string[,] sv3 = new string[line.Length, 5];
+            //Append data
+            for (byte i = 0; i < line.Length; i++)
+            {
+                sv2 = line[i].Split(',');
+                for (byte k = 0; k < 5; k++)
+                {
+                    sv3[i, k] = sv2[k];
+                    //Console.WriteLine(sv3[i, k]);                         checked
+                }
+            }
+            return sv3;
+        }
+        /// <summary>
+        /// take people info and return a 2d array from them
+        /// </summary>
+        /// <returns></returns>
+
+        static string[] name(string path)                               //preload  name col
+        {
+            string[,] sv2 = ReLoad_Read_file(path);
+            string[] sv2_name = new string[sv2.Length / 5];
+            for (int i = 0; i < sv2_name.Length; i++)
+            {
+                sv2_name[i] = sv2[i, 0];
+            }
+            return sv2_name;
+        }
+        static string[] ssn(string path)                                                   //preload ssn svs
+        {
+            string[,] sv2 = ReLoad_Read_file(path);
+            string[] sv2_ssn = new string[sv2.Length / 5];
+            for (int i = 0; i < sv2_ssn.Length; i++)
+            {
+                sv2_ssn[i] = sv2[i, 3];
+            }
+            return sv2_ssn;
+        }
+        static string[,] Take_info()                                                          //Take_info
+        {
+            string path = "" +
+            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
+            //PreLoad
+            string[] sv_name = name(path);
+            string[] sv_ssn = ssn(path);
+
+
+            string[,] sv;
+            string[] sv2 =  {"Enter your name : ",
+                            "Enter your age (above 18): ",
+                            "Enter your code class : ",
+                            "Enter your SSN (12 number): ",
+                            "Enter your code room : "};
+            Console.Write("Enter number of people: ");
+            short num = short.Parse(Console.ReadLine());
+            sv = new string[num, 5];
+            //Check and take info people
+            Console.WriteLine($"The first one !");
+            for (byte i = 0; i < num; i++)
+            {
+                //  check name
+                while (true)
+                {
+                    Console.Write(sv2[0]);
+                    string name = Console.ReadLine();
+                    if (sv_name.Contains(name))
+                    {
+                        Console.WriteLine("Your name already exists in this list !");
+                        if (name.Length > 13)
+                        {
+                            Console.Write("\tThe name can't be over 13 characters !\n");
+                        }
+                    }
+                    else
+                    {
+                        sv[i, 0] = name;
+                        break;
+                    }
+                }
+                //check age
+                while (true)
+                {
+                    Console.Write(sv2[1]);
+                    int age = int.Parse(Console.ReadLine());
+                    if (age > 18 && age < 23)
+                    {
+                        sv[i, 1] = Convert.ToString(age);
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("\tOpps ,The age can't below 18 !\n");
+                    }
+                }
+                //check class
+                while (true)
+                {
+                    Console.Write(sv2[2]);
+                    string code_class = Console.ReadLine();
+                    if (code_class.Length == 6)
+                    {
+                        sv[i, 2] = code_class;
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("\tExpect 6 number !, Try again\n");
+                    }
+                }
+                while (true)
+                {
+                    Console.Write(sv2[3]);
+                    string ssn = Console.ReadLine();
+                    if (sv_ssn.Contains(ssn) || ssn.Length != 12)
+                    {
+                        Console.WriteLine("This ssn have already exist or over 12 char !,  Try again ");
+                    }
+                    else
+                    {
+                        sv[i, 3] = ssn;
+                        break;
+                    }
+                }
+                //check room code
+                while (true)
+                {
+                    Console.Write(sv2[4]);
+                    string room = Console.ReadLine();
+                    if (room.Length == 3)
+                    {
+                        sv[i, 4] = room;
+                        break;
+                    }
+                    else
+                    {
+                        Console.Write("\tExpect 3 number, One more time !\n");
+                    }
+                }
+                if (i == num - 1)
+                {
+                    Console.WriteLine("Done !");
+                }
+                else
+                {
+                    Console.Write("The next one ! \n\n");
+                }
+
+            } //end for loop
+
+            return sv;
+        } //end func
+        /// <summary>
+        /// Just Write a array into a file 
+        /// </summary>
+        /// <param name="sv"></param>
+        static void Write_Array_to_file(string[,] sv)                          //Write_array_to_file
+        {
+            //Create a stream overwrite file
+            StreamWriter write_file = new StreamWriter(
+            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", true);
+            //check the length of this 2darray
+            int len_sv = sv.Length / 5;
+            for (byte i = 0; i < len_sv; i++)
+            {
+                write_file.Write(sv[i, 0] + ',' + sv[i, 1] + ',' + sv[i, 2] + ',' + sv[i, 3] + ',' + sv[i, 4] + "\n");
+            }
+            write_file.Close();
+        }
+        static void Write_Array_to_file_after_delete(string[,] sv)                          //Write_array_to_file
+        {
+            //Create a stream overwrite file
+            StreamWriter write_file = new StreamWriter(
+            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            //check the length of this 2darray
+            int len_sv = sv.Length / 5;
+            for (byte i = 0; i < len_sv; i++)
+            {
+                write_file.Write(sv[i, 0] + ',' + sv[i, 1] + ',' + sv[i, 2] + ',' + sv[i, 3] + ',' + sv[i, 4] + "\n");
+            }
+
+            write_file.Close();
+        }
+
+        /// <summary>
+        /// show all data of this array, as a show function
+        /// </summary>
+        /// <param name="sv"></param>
+        static void Show_all_data(string[,] sv2)                                 //Show_all_data
+        {
+            int maxLength = 15;
+            //Console.WriteLine(maxLength);
+            //Can le phai
+            Console.WriteLine("\n\tThis's the list info of all people in this dorm !\n");
+            Console.WriteLine("Name".PadRight(maxLength) +
+                              "Age".PadRight(maxLength) +
+                              "Class".PadRight(maxLength) +
+                              "SSN".PadRight(maxLength) +
+                              "Room".PadRight(maxLength));
+            for (int i = 0; i < sv2.Length / 5; i++)
+            {
+                Console.WriteLine(sv2[i, 0].PadRight(maxLength) +
+                    sv2[i, 1].PadRight(maxLength) +
+                    sv2[i, 2].PadRight(maxLength) +
+                    sv2[i, 3].PadRight(maxLength) +
+                    sv2[i, 4]);
+            }
+            Console.WriteLine($"Table info : {sv2.GetLength(0) - 1}(row),{sv2.GetLength(1)}(column)");
+        }
+        static void Del_array(string path)                                                    //Delete
+        {
+            StreamWriter del = new StreamWriter(path);
+            Console.WriteLine("You want delete this Data set, No Way !" +
+                "\nKeep your mind clear boy , once go never come (y/n): ");
+
+
+            if (Console.ReadLine() == "y")
+            {
+                del.WriteLine("____________,_________,________,____________,____");      //this is the root of all problem
+                del.Close();
+                Console.WriteLine("Oh, you have my respect, Boy ");
+                Console.Write("Continue your work, right !..");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.WriteLine("I know, Don't be stupid, I like this guy !");
+                Console.Write("Tap anywhere to skip !");
+                Console.ReadKey();
+            }
+
+        }
+
+        static string Greet()                                                                      //Greet
+        {
+            Console.WriteLine("Welcome to my dormitory management ConsoleAppication\n");
+            Console.Write("\t\tSign in \n1,Admin\n2,User\nYou're : ");
+            string sign_in_code = Console.ReadLine();
+            if (sign_in_code == "1")
+            {
+                Console.WriteLine("Welcome back Sir !");
+                return sign_in_code;
+            }
+            else
+            {
+                Console.WriteLine("User ");
+                return sign_in_code;
+            }
+
+        }
+        static string Check()                                                                 //check option
+        {
+            Console.Write("We have these option: \n" +
+                "\t1,Add".PadRight(11) + "4,Delete\n".PadRight(11) +
+                "\t2,Find".PadRight(11) + "5,Sort\n".PadRight(11) +
+                "\t3,Update".PadRight(11) + "6,Show".PadRight(11) + "7,Exit" +
+                "\n What do you want: ");
+            string check = Console.ReadLine();
+            return check;
+        }
+
+        static void Take_and_write()                                              //Take and write info into file, 2 in 1
+        {
+            string[,] sv = Take_info();
+            Write_Array_to_file(sv);
+        }
+        static void Reload_and_show(string path)                                         //reload and show all data
+        {
+            string[,] sv2 = ReLoad_Read_file(path);
+            Show_all_data(sv2);
+        }
+        static void write_slowly(string story)                                                 //Write slowly
+        {
+            foreach (char y in story)
+            {
+                Console.Write(y);
+                Thread.Sleep(65);
+            }
+        }
+        static void Find_(string path, string key_word, int col)                              //Find by detail info
+        {
+            byte els = 0;
+            string[,] sv2 = ReLoad_Read_file(path);
+            for (int i = 0; i < sv2.Length / 5; i++)
+            {
+
+                if (sv2[i, col] == key_word)
+                {
+
+                    Console.Write($"Yeah !, I've found info about him ,{sv2[i, col]}" +
+                        $"\nYou wanna see it : (y/n) ");
+                    if (Console.ReadLine() == "y")
+                    {
+                        string story = $"Infomation about \"{key_word}\" to you !" +
+                           $"\nFirst His name is {sv2[i, 0]} , Now he's {sv2[i, 1]} year old " +
+                           $"\nAnd He's staying in room {sv2[i, 4]}" +
+                           $"\nHis SSN is {sv2[i, 3]}" +
+                           $"\nStudent of {sv2[i, 2]} class !" +
+                           $"\n SO that's all infomation He gave me, Bye !\n";
+                        write_slowly(story);
+                    }
+                }
+                else
+                {
+                    els++;
+                }
+            }
+            if (els == sv2.Length / 5)
+            {
+                Console.WriteLine("Opps , I have no information about him !");
+            }
+
+
+        }
+        static void Find_info(string path)                                                        //Find_info
+        {
+            Console.WriteLine("You want find info by what:" +
+            "\n1,Name" + "\t2,Age(Not Supported)" + "\n3,SSN" + "\t4,Room(Not supported)" + "\n5,Class");
+            string check;
+            while (true)
+            {
+                Console.Write("Your Choice: ");
+                check = Console.ReadLine();
+                if (check == "1")
+                {
+                    Console.Write("Give me the name: ");
+                    string name = Console.ReadLine();
+                    Find_(path, name, 0);
+                    break;
+                }
+                else if (check == "3")
+                {
+                    Console.Write("Your SSN");
+                    string ssn = Console.ReadLine();
+                    Find_(path, ssn, 3);
+                    break;
+                }
+                else if (check == "5")
+                {
+                    Console.WriteLine("\t\tNot supported !");
+
+                }
+                else { Console.WriteLine("Try Again !"); }
+            }
+
+        }
+
+        static void del_by_name(string path)                                                        //del by name
+        {
+            string[,] sv2 = ReLoad_Read_file(path);
+            string[] sv_name = new string[sv2.GetLength(0)];
+            //for (int i = 0; i < sv2.GetLength(0); i++)
+            //{
+            //    sv_name[i] = sv2[i,0];
+            //}
+
+        }
+        static void Update(string path, string key_word)                              //Find by detail info
+        {
+            byte els = 0;
+
+            string[] sv_ssn = ssn(path);
+            string[] sv4 =  {"Enter your new age (above 18): ",
+                            "Enter your new code class : ",
+                            "Enter your new SSN (12 number): ",
+                            "Enter your new code room : "};
+
+            string[,] sv2 = ReLoad_Read_file(path);
+            for (int i = 0; i < sv2.Length / 5; i++)
+            {
+
+                if (sv2[i, 0] == key_word)
+                {
+                    Console.Write($"You mean {sv2[i, 0]} with ssn is {sv2[i, 3]}" +
+                        $"\nUpdate now (y/n) ");
+                    if (Console.ReadLine() == "y")
+                    {
+                        while (true)
+                        {
+                            Console.Write(sv4[0]);
+                            int age = int.Parse(Console.ReadLine());
+                            if (age > 18 && age < 23)
+                            {
+                                sv2[i, 1] = Convert.ToString(age);
+                                break;
+                            }
+                            else
+                            {
+                                Console.Write("\tOpps ,The age can't below 18 !\n");
+                            }
+                        }
+                        while (true)
+                        {
+                            Console.Write(sv4[1]);
+                            string code_class = Console.ReadLine();
+                            if (code_class.Length == 6)
+                            {
+                                sv2[i, 2] = code_class;
+                                break;
+                            }
+                            else
+                            {
+                                Console.Write("\tExpect 6 number !, Try again\n");
+                            }
+                        }
+                        while (true)
+                        {
+                            Console.Write(sv4[2]);
+                            string ssn = Console.ReadLine();
+                            if (sv_ssn.Contains(ssn) || ssn.Length != 12)
+                            {
+                                Console.WriteLine("This ssn have already exist or over 12 char !,  Try again ");
+                            }
+                            else
+                            {
+                                sv2[i, 3] = ssn;
+                                break;
+                            }
+                        }
+                        while (true)
+                        {
+                            Console.Write(sv4[3]);
+                            string room = Console.ReadLine();
+                            if (room.Length == 3)
+                            {
+                                sv2[i, 4] = room;
+                                break;
+                            }
+                            else
+                            {
+                                Console.Write("\tExpect 3 number, One more time !\n");
+                            }
+                        }
+                        Console.WriteLine("Your info have been updated !");
+                        //wrrite to file
+                        Write_Array_to_file_update(sv2);
+                    }
+                }
+                else
+                {
+                    els++;
+                }
+            }
+            if (els == sv2.Length / 5)
+            {
+                Console.WriteLine("This name not exiat in my data set !");
+            }
+        }
+
+        static void Write_Array_to_file_update(string[,] sv)                          //Write_array_to_file
+        {
+            //Create a stream overwrite file
+            StreamWriter write_file = new StreamWriter(
+            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            //check the length of this 2darray
+            int len_sv = sv.Length / 5;
+            for (byte i = 0; i < len_sv; i++)
+            {
+                write_file.Write(sv[i, 0] + ',' + sv[i, 1] + ',' + sv[i, 2] + ',' + sv[i, 3] + ',' + sv[i, 4] + "\n");
+            }
+            write_file.Close();
+        }
+        static void Check_Update_info(string path)                                                        //Updateinfo
+        {
+            Console.WriteLine("You want update info by what:" +
+            "\n\t1,Name" + "\n\t2,Age(Not Supported)" + "\n\t3,SSN(Not Supported)" + "\n\t4,Room(Not supported)" + "\n\t5,Class(Not Supported)");
+            string check;
+            while (true)
+            {
+                Console.Write("Your Choice: ");
+                check = Console.ReadLine();
+                if (check == "1")
+                {
+                    Console.Write("Give me the name: ");
+                    string name = Console.ReadLine();
+                    Update(path, name);
+                    break;
+                }
+                else if (check == "3")
+                {
+                    Console.WriteLine("\t\tNot supported !");
+                }
+                else if (check == "5")
+                {
+                    Console.WriteLine("\t\tNot supported !");
+
+                }
+                else if (check == "2")
+                {
+                    Console.WriteLine("\t\tNot supported !");
+
+                }
+                else if (check == "4")
+                {
+                    Console.WriteLine("\t\tNot supported !");
+
+                }
+                else { Console.WriteLine("Try Again !"); }
+            }
+
+        }
+        static string[,] delete_by_name(string[,] name_before)                //delete by name
+        {
+
+            //lấy phần tử thứ nhất làm 1 cái array để so sánh
+            string[] name3 = new string[name_before.Length / 5];
+            for (int i = 0; i < name_before.Length / 5; i++)
+            {
+                name3[i] = name_before[i, 0];
+            }
+
+            //array after delete one 
+            string[,] name_after = new string[name_before.Length / 5 - 1, 5];
+
+            Console.Write("Enter youu name: ");
+            string key = Console.ReadLine();
+
+            if (name3.Contains(key))
+            {
+                int k = 0;
+                for (int o = 0; o < name_after.Length / 5; o++)
+                {
+                    if (name3[o] == key || k >= 1)
+                    {
+                        name_after[o, 0] = name_before[o + 1, 0];
+                        name_after[o, 1] = name_before[o + 1, 1];
+                        name_after[o, 2] = name_before[o + 1, 2];
+                        name_after[o, 3] = name_before[o + 1, 3];
+                        name_after[o, 4] = name_before[o + 1, 4];
+                        k += 1;
+                    }
+                    else
+                    {
+                        name_after[o, 0] = name_before[o, 0];
+                        name_after[o, 1] = name_before[o, 1];
+                        name_after[o, 2] = name_before[o, 2];
+                        name_after[o, 3] = name_before[o, 3];
+                        name_after[o, 4] = name_before[o, 4];
+                    }
+                }
+                Console.WriteLine($"Info of {key} have been delete !");
+                return name_after;
+            }
+            else
+            {
+                Console.WriteLine("This name not exist in this list !");
+                Console.Write("Continue.......");
+                Console.ReadKey();
+                return name_before;
+            }
+
+
+        }
+        static void delele_by_name_and_write_file(string path)            //delete and write into file
+        {
+            string[,] sv6 = ReLoad_Read_file(path);
+            string[,] sv7 = delete_by_name(sv6);
+            Write_Array_to_file_after_delete(sv7);
+          
+        }
+        /// <summary>
+        /// Our main actor, control all of these function 
+        /// </summary>
+        /// <param name="lovecrush"></param>
+        static void Main(string[] lovecrush)                                         //Main
+        {
+            //Encoding
+            Console.InputEncoding = Encoding.UTF8;
+            Console.OutputEncoding = Encoding.UTF8;
+
+            // Start
+            string path = "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
+
+            string check;
+            string permit = Greet();
+
+            while (true)
+            {
+                //Check menu               
+                check = Check();
+                if (check == "1")
+                {
+
+                    Take_and_write();
+                    while (true)
+                    {
+                        Console.WriteLine("Continue taking info...(y/n) ");
+                        if (Console.ReadLine() == "y")
+                        {
+                            Take_and_write();
+                        }
+                        else { break; }
+                    }
+
+                }
+                else if (check == "2")
+                {
+                    Find_info(path);
+                    while (true)
+                    {
+                        Console.Write("Continue finding someone...or return Menu (y/n) ");
+                        if (Console.ReadLine() == "y")
+                        {
+                            Find_info(path);
+                        }
+                        else { break; }
+
+                    }
+
+                }
+                else if (check == "3")
+                {
+                    Console.WriteLine("hello 3");
+                    Check_Update_info(path);
+                }
+                else if (check == "4")
+                {
+                    if (permit == "1")
+                    {
+                        Console.WriteLine("You have two Choice !" +
+                                      "\n\t 1) delete all data" +
+                                      "\n\t 2) delete one record");
+                        Console.Write("Enter your choice: ");
+                        string check1 = Console.ReadLine();
+                        if (check1 == "1")
+                        {
+                            Del_array(path);
+
+                        }
+                        else if (check1 == "2")
+                        {
+                            Console.WriteLine("Delete info by name");
+                            delele_by_name_and_write_file(path);
+                            while (true)
+                            {
+                                Console.Write("Continue delete someone...or return Menu (y/n) ");
+                                if (Console.ReadLine() == "y")
+                                {
+                                    delele_by_name_and_write_file(path);
+                                }
+                                else { break; }
+
+                            }
+
+
+                        }
+                        else { Console.WriteLine("Next now !"); break; }
+
+
+                    }
+                    else { Console.WriteLine("This action need admin permission !"); }
+
+                }
+                else if (check == "5")
+                {
+                    Console.WriteLine("hello 5");
+
+                }
+                else if (check == "6")
+                {
+                    Reload_and_show(path);
+                    Console.WriteLine("Tap anywhere to skip !");
+                    Console.ReadKey();
+                }
+                else if (check == "7")
+                {
+                    Console.WriteLine("Goodbye SIR !");
+                    break;
+                }
+            }
+
+            Console.WriteLine("Have a nice day !");
+            //End
+        }
+    }
+}
