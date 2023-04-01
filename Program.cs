@@ -153,7 +153,7 @@ namespace Dormitory_console_0._0._2
                 {
                     Console.Write(sv2[0]);
                     string name = Console.ReadLine();
-                    if (sv_name.Contains(name))
+                    if (sv_name.Contains(name) )
                     {
                         Console.WriteLine("\tYour name already exists in this list !");
                     }
@@ -164,6 +164,10 @@ namespace Dormitory_console_0._0._2
                     else if (name.Any(char.IsDigit))
                     {
                         Console.WriteLine("\tThe name not containt number !");
+                    }
+                    else if (name.Length < 1)
+                    {
+                        Console.WriteLine("\tThe name can not below one character !");
                     }
                     else
                     {
@@ -345,7 +349,7 @@ namespace Dormitory_console_0._0._2
         /// <param name="sv"></param>
         static void Show_all_data(string[,] sv2)                                 //Show_all_data
         {
-            int maxLength = 16;
+            int maxLength = 15;
             //Console.WriteLine(maxLength);
             //Can le phai
             Console.WriteLine("\n\tThis's the list info of all people in this dorm !\n");
@@ -363,7 +367,7 @@ namespace Dormitory_console_0._0._2
                     sv2[i, 3].PadRight(maxLength) +
                     sv2[i, 4]);
             }
-            Console.WriteLine($"  Table info : {sv2.GetLength(0) - 1}(row),{sv2.GetLength(1)}(column)");
+            Console.WriteLine($"\n\tTable info : {sv2.GetLength(0) - 1}(row),{sv2.GetLength(1)}(column)");
         }
         /// <summary>
         /// del array, acctually , write a base string to mark it and ready to overwrite
@@ -394,27 +398,6 @@ namespace Dormitory_console_0._0._2
         }
         /// <summary>
         /// A good Greet for you, My sir !
-        /// </summary>
-        /// <returns></returns>
-        //static string Greet()                                                                      //Greet
-        //{
-        //    Console.WriteLine("Welcome to my dormitory management ConsoleAppication\n");
-        //    Console.Write("\t\tSign in \n1,Admin\n2,User\nYou're : ");
-        //    string sign_in_code = Console.ReadLine();
-        //    if (sign_in_code == "1")
-        //    {
-        //        Console.WriteLine("Welcome back Sir !");
-        //        return sign_in_code;
-        //    }
-        //    else
-        //    {
-        //        Console.WriteLine("User ");
-        //        return sign_in_code;
-        //    }
-
-        //}
-        /// <summary>
-        /// Check option 
         /// </summary>
         /// <returns></returns>
         static string Check()                                                                 //check option
@@ -870,7 +853,7 @@ namespace Dormitory_console_0._0._2
 
         static void Statistic(string[,] array)                       //Statistic
         {
-            Console.WriteLine("\n\tStatistic Quantity of each room ");
+            Console.WriteLine("\n\t\tStatistic Quantity of each room ");
             string[] room = code_room2();
             //take unik element
             string[] unik = room.Distinct().ToArray();
@@ -886,11 +869,11 @@ namespace Dormitory_console_0._0._2
             //Console.WriteLine(unik.Length); 
             //Console.WriteLine(unik_sl.Length);
 
-            Console.WriteLine("\n  Room\tQuantity    Member");
-            Console.WriteLine("  ____\t________    ______");
+            Console.WriteLine("\n\tInd   Room\tQuantity    Member");
+            Console.WriteLine("\t _    ____\t________    ______");
             for (byte k = 1; k < unik.Length; k++)
             {
-                Console.Write($"  "+$"{unik[k]}\t   {unik_sl[k]}        ");
+                Console.Write($"\t {k}".PadRight(7) +$"{unik[k]}\t   {unik_sl[k]}        ");
                 for (int o = 1; o < array.Length / 5; o++)
                 {
                     if (unik[k] == array[o, 4].Split(' ')[0])
@@ -943,7 +926,7 @@ namespace Dormitory_console_0._0._2
                     Find_info(path);
                     while (true)
                     {
-                        Console.Write("  Continue finding someone...or return Menu (y/n) ");
+                        Console.Write("\tContinue finding someone...or return Menu (y/n) ");
                         if (Console.ReadLine() == "y")
                         {
                             Find_info(path);
@@ -1004,7 +987,7 @@ namespace Dormitory_console_0._0._2
                 {
                     //option 6
                     Reload_and_show(path);
-                    Console.Write("  You want statistic now ! (y/n) ");
+                    Console.Write("\n    You want statistic now ! (y/n) ");
                     if (Console.ReadLine() == "y")
                     {
                         string[,] sv3 = ReLoad_Read_file(path);
