@@ -1059,6 +1059,8 @@ namespace Dormitory_console_0._0._2
                     Console.ReadKey();  
                     Console.Clear();
                 }
+                //dung pull xem no nhu nao
+                
                 //End
             }
         }
