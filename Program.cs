@@ -71,7 +71,7 @@ namespace Dormitory_console_0._0._2
         static string[] code_room()                  //return room  support for check room
         {
             string path =
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt";
             string[,] sv2 = ReLoad_Read_file(path);
             string[] room9 = new string[sv2.Length / 5];
             //Console.WriteLine("lengh of sv2 " + sv2.Length/5);
@@ -121,7 +121,7 @@ namespace Dormitory_console_0._0._2
         /// <returns></returns>
         static string[,] Take_info()                                                          //Take_info
         {
-            string path = "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
+            string path = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt";
             //PreLoad
             string[] sv_name = name(path);
             string[] sv_ssn = ssn(path);
@@ -275,7 +275,7 @@ namespace Dormitory_console_0._0._2
         static void Write_Array_to_file(string[,] sv)                          //Write_array_to_file
         {
             //Create a stream overwrite file
-            StreamWriter write_file = new StreamWriter("C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", true);
+            StreamWriter write_file = new StreamWriter("C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt", true);
             //check the length of this 2darray
             int len_sv = sv.Length / 5;
             for (byte i = 0; i < len_sv; i++)
@@ -292,7 +292,7 @@ namespace Dormitory_console_0._0._2
         {
             //Create a stream overwrite file
             StreamWriter write_file = new StreamWriter(
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt", false);
             //check the length of this 2darray
             int len_sv = sv.Length / 5;
             for (byte i = 0; i < len_sv; i++)
@@ -310,7 +310,7 @@ namespace Dormitory_console_0._0._2
         {
 
             StreamWriter write_file = new StreamWriter(
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt", false);
             //check the length of this 2darray
             int len_sv = sv.Length / 5;
             for (byte i = 0; i < len_sv; i++)
@@ -319,7 +319,7 @@ namespace Dormitory_console_0._0._2
                                  sv[i, 1] + ',' +
                                  sv[i, 2] + ',' +
                                  sv[i, 3] + ',' +
-                                 sv[i, 4] + "\n");
+                                 sv[i, 4] + "/n");
             }
 
             write_file.Close();
@@ -332,7 +332,7 @@ namespace Dormitory_console_0._0._2
         {
             //Create a stream overwrite file
             StreamWriter write_file = new StreamWriter(
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt", false);
             //check the length of this 2darray
             int len_sv = sv.Length / 5;
             for (byte i = 0; i < len_sv; i++)
@@ -644,7 +644,7 @@ namespace Dormitory_console_0._0._2
         {
             //Create a stream overwrite file
             StreamWriter write_file = new StreamWriter(
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt", false);
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt", false);
             //check the length of this 2darray
             int len_sv = sv.Length / 5;
             for (byte i = 0; i < len_sv; i++)
@@ -819,8 +819,8 @@ namespace Dormitory_console_0._0._2
         static void Write_file_backup(string[,] sv)                          //Write_array_to_file backup
         {
             //Create a stream overwrite file
-            StreamWriter write_file = new StreamWriter("C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv_backup.txt", true);
-            StreamWriter write_file_history = new StreamWriter("C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv_backup_history.txt", true);
+            StreamWriter write_file = new StreamWriter("C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv_backup.txt", true);
+            StreamWriter write_file_history = new StreamWriter("C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv_backup_history.txt", true);
             //check the length of this 2darray
             DateTime now = DateTime.Now;
             int len_sv = sv.Length / 5;
@@ -837,7 +837,7 @@ namespace Dormitory_console_0._0._2
         static string[] code_room2()                  //return room  support for check room
         {
             string path =
-            "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
+            "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt";
             string[,] sv2 = ReLoad_Read_file(path);
             string[] room9 = new string[sv2.Length / 5];
             //Console.WriteLine("lengh of sv2 " + sv2.Length/5);
@@ -895,9 +895,9 @@ namespace Dormitory_console_0._0._2
             Console.OutputEncoding = Encoding.UTF8;
 
             // Start
-            string path = "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv.txt";
-            string path_his = "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv_backup_history.txt";
-            string path_backup = "C:/Users/my pc/Documents/file C#/Dormitory console 0.0.2/sv_backup.txt";
+            string path = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt";
+            string path_his = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv_backup_history.txt";
+            string path_backup = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv_backup.txt";
 
             string check;
             //string permit = Greet();

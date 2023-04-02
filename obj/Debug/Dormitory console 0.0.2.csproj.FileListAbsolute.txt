@@ -6,3 +6,11 @@ C:\Users\my pc\Documents\file C#\Dormitory console 0.0.2\obj\Debug\Dormitory con
 C:\Users\my pc\Documents\file C#\Dormitory console 0.0.2\obj\Debug\Dormitory console 0.0.2.csproj.CoreCompileInputs.cache
 C:\Users\my pc\Documents\file C#\Dormitory console 0.0.2\obj\Debug\Dormitory console 0.0.2.exe
 C:\Users\my pc\Documents\file C#\Dormitory console 0.0.2\obj\Debug\Dormitory console 0.0.2.pdb
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\bin\Debug\Dormitory console 0.0.2.exe.config
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\bin\Debug\Dormitory console 0.0.2.exe
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\bin\Debug\Dormitory console 0.0.2.pdb
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\obj\Debug\Dormitory console 0.0.2.csproj.AssemblyReference.cache
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\obj\Debug\Dormitory console 0.0.2.csproj.SuggestedBindingRedirects.cache
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\obj\Debug\Dormitory console 0.0.2.csproj.CoreCompileInputs.cache
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\obj\Debug\Dormitory console 0.0.2.exe
+C:\Users\my pc\Documents\GitHub\Dormitory-console-application-for-management\obj\Debug\Dormitory console 0.0.2.pdb
