@@ -9,6 +9,7 @@ using System.Dynamic;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Linq.Enumerable;
 using System.Threading;
+using System.Data;
 
 namespace Dormitory_console_0._0._2
 {
@@ -169,6 +170,7 @@ namespace Dormitory_console_0._0._2
                     {
                         Console.WriteLine("\tThe name can not below one character !");
                     }
+                    
                     else
                     {
                         sv[i, 0] = name;
@@ -261,7 +263,7 @@ namespace Dormitory_console_0._0._2
                 }
                 else
                 {
-                    Console.Write("  The next one ! \n");
+                    Console.Write("  The next one ! \n\n");
                 }
 
             } //end for loop
@@ -410,7 +412,8 @@ namespace Dormitory_console_0._0._2
                             "\t     2,/Find/".PadRight(19) + "5,/Sort by alphabet/\n" +
                             "\t     3,/Update/".PadRight(19) + "6,/Show and Statistic/\n" +
                             "\t     7,/Exit/".PadRight(19) + "8,/Obout us/\n" +
-                            "\t\t 9,/Backup and. Recovery/\n" +
+                            "\t     10, /Register/\n" +
+                            "\t\t9,/Backup and. Recovery/\n" +
                             " >> Option : ");
             string check = Console.ReadLine();
             return check;
@@ -477,7 +480,7 @@ namespace Dormitory_console_0._0._2
             }
             if (els == sv2.Length / 5)
             {
-                Console.WriteLine("Opps , I have no information about him !");
+                Console.WriteLine("\tOpps , I have no information about him !");
             }
         }
         //
@@ -633,7 +636,8 @@ namespace Dormitory_console_0._0._2
             }
             if (els == sv2.Length / 5)
             {
-                Console.WriteLine("  This name not exist in my data set !");
+                Console.Write("  This name not exist in my data set !");
+                Console.ReadKey ();
             }
         }
         /// <summary>
@@ -678,13 +682,14 @@ namespace Dormitory_console_0._0._2
             string key = Console.ReadLine();
             if (name3.Contains(key))
             {
+        
                 int k = 0;
                 for (int o = 0; o < name_after.Length / 5; o++)
                 {
                     if (name3[o] == key || k >= 1)
                     {
                         name_after[o, 0] = name_before[o + 1, 0];
-                        name_after[o, 1] = name_before[o + 1, 1];
+                        name_after[o, 1]    = name_before[o + 1, 1];
                         name_after[o, 2] = name_before[o + 1, 2];
                         name_after[o, 3] = name_before[o + 1, 3];
                         name_after[o, 4] = name_before[o + 1, 4];
@@ -884,6 +889,226 @@ namespace Dormitory_console_0._0._2
                 Console.WriteLine();
             }
         }
+        static string[] Load_account()
+        {
+            string path = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/account_password.txt";
+            StreamReader reader = new StreamReader(path);
+            string all_line = reader.ReadToEnd().Trim();
+            reader.Close();
+            string[] acc_pass = all_line.Split('\n');
+            //foreach (string i in acc_pass)
+            //{
+            //    Console.WriteLine("    {"+i +"}    ");
+            //}
+            //Console.ReadKey();
+            return acc_pass;
+        }
+        static string[] Load_account2()
+        {
+            string path = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/account_password.txt";
+            StreamReader reader = new StreamReader(path);
+            string all_line = reader.ReadToEnd().Trim();
+            reader.Close();
+            string[] acc_pass = all_line.Split('\n');
+            string[] acc = new string[acc_pass.Length];
+            for (byte k = 0; k < acc.Length; k++)
+            {
+                acc[k]  = acc_pass[k].Trim().Split(',')[0];
+            }
+            return acc;
+        }
+
+
+        static void Register()
+        {
+            string[] pre_acc_pas  = Load_account2();
+            
+            //Check thoong tin caur nguwoif danwg kis
+            Console.WriteLine("\n\t\t  Register !");
+            Console.SetCursorPosition(9, 15);
+            Console.Write(">>   Account  :");
+
+            Console.SetCursorPosition(9, 16);
+            Console.Write("        Role  :");
+
+            Console.SetCursorPosition(9, 17);
+            Console.Write("    Password  :");
+
+            string tk, role, pass;
+            //check account
+            while (true)
+            {
+                //Đầu tiên làm mới các vùng ngay sau dấu 2 chấm
+                Console.SetCursorPosition(24, 15);
+                Console.Write(" ".PadRight(15));
+                Console.SetCursorPosition(24, 15);
+                tk = Console.ReadLine();
+                if (tk.Length == 0 || pre_acc_pas.Contains(tk))
+                {
+                    //cái này để xóa mấy cái kí tự đã nhập cũ đi để thay chỗ nhập mới
+                    Console.SetCursorPosition(40,15);
+                    Console.Write("This account have alreadt exist !");
+                }
+                else
+                {
+                    //cái này để dọn sạch  cái điều  kiện lỗi ct in ra
+                    Console.SetCursorPosition(39, 15);
+                    Console.Write(" ".PadRight(40));
+                    break;
+                }
+
+            }
+
+            Console.SetCursorPosition(9, 16);
+            Console.Write(">>");
+
+            while (true)
+            {
+                Console.SetCursorPosition(24, 16);
+                Console.Write(" ".PadRight(15));
+                Console.SetCursorPosition(24, 16);
+                role = Console.ReadLine();
+                if (role == "manage" || role == "student")
+                {
+                    Console.SetCursorPosition(24+12, 16);
+                    Console.Write(" ".PadRight(40));
+                    break;
+                }
+                else
+                {
+                    Console.SetCursorPosition(39, 16);
+                    Console.Write("Accept two role (manage/student) !");
+                }
+
+            }
+
+            Console.SetCursorPosition(9, 17);
+            Console.Write(">>");
+
+            while (true)
+            {
+                Console.SetCursorPosition(24, 17);
+                Console.Write(" ".PadRight(15));
+                Console.SetCursorPosition(24, 17);
+                pass = Console.ReadLine();
+                if (pass.Length > 1 && pass.All(char.IsDigit))
+                {
+                    Console.SetCursorPosition(24+12,17);
+                    Console.Write(" ".PadRight(33));
+                    break;
+                }
+                else
+                {
+                    Console.SetCursorPosition(39,17);
+                    Console.Write("Accept only number !");
+                }
+
+            }
+            Console.SetCursorPosition (7, 19);
+            Console.Write("This account will register with your info below (y/n) ");
+            if (Console.ReadLine()  == "y")
+            {
+
+                Console.SetCursorPosition(15, 20);
+                string acc_rol_pas = tk + ',' + role + ',' + pass+'\n';
+                //Console.Write(acc_rol_pas);
+                StreamWriter write = new StreamWriter("C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/account_password.txt",true);
+                write.Write(acc_rol_pas); write.Close();
+
+                Console.Write("\n\tRegister Complete !");
+                Console.ReadKey();
+            }
+            else
+            {
+                Console.SetCursorPosition(15, 20);
+                Console.Write("Register fail !");
+            }
+
+
+
+        }
+        static void Login()
+        {
+            //Check Log in
+            string[] pre_acc = Load_account();
+
+            while (true)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(10, 1);
+                Console.Write("<> Login <> ");
+
+                Console.SetCursorPosition(2, 3);
+                Console.Write(">> User name  :");
+
+                Console.SetCursorPosition(2, 4);
+                Console.Write("        Role  :");
+
+                Console.SetCursorPosition(2, 5);
+                Console.Write("    Password  :");
+
+                Console.SetCursorPosition(17, 3);
+                string tk = Console.ReadLine();
+
+                Console.SetCursorPosition(2, 4);
+                Console.Write(">> ");
+
+                Console.SetCursorPosition(17, 4);
+                string role = Console.ReadLine();
+
+                Console.SetCursorPosition(2, 5);
+                Console.Write(">> ");
+
+                Console.SetCursorPosition(17, 5);
+
+                string password = ""; //Tạo một chuỗi rỗng.
+                //Console.Write("Please enter your password: ");
+
+                while (true)
+                {
+                    // Lấy phím đang được nhấn từ bàn phím.
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    // Nếu phím Enter được ấn, thoát khỏi vòng lặp.
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+
+                    // Nếu phím Backspace được ấn và độ dài của chuỗi lớn hơn 0, xóa ký tự cuối cùng ra khỏi chuỗi.
+                    else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                    {
+                        password = password.Remove(password.Length - 1);
+                        Console.Write("\b \b"); // Xóa ký tự với backspace.
+                    }
+
+                    // Trường hợp còn lại, thêm ký tự đó vào chuỗi.
+                    else if (char.IsLetterOrDigit(key.KeyChar))
+                    {
+                        password += key.KeyChar;
+                        Console.Write("*"); // In dấu * để ẩn ký tự đã nhập.
+                    }
+                }
+
+                //string mk = Console.ReadLine();
+
+                string acc_pas = tk+','+role+","+password;
+                //Console.Write(acc_pas);
+                if (pre_acc.Contains(acc_pas))
+                {
+                    Console.Write("\n\n\tWelcome Back Sir !");
+                    Console.ReadKey();
+                    break;
+                }
+                else
+                {
+                    Console.SetCursorPosition(13, 4);
+                    Console.Write("\n\n\n\tIncorrect account or password ! ");
+                    Console.ReadKey();
+                }
+            }
+
+        }
         /// <summary>
         /// Our main actor, control all of these function 
         /// </summary>
@@ -900,11 +1125,13 @@ namespace Dormitory_console_0._0._2
             string path_backup = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv_backup.txt";
 
             string check;
-            //string permit = Greet();
 
+            //Menu 
+            Login();
             while (true)
             {
-                //Check menu               
+                //Check menu
+                Console.Clear();
                 check = Check();
                 if (check == "1")
                 {
@@ -938,6 +1165,16 @@ namespace Dormitory_console_0._0._2
                 else if (check == "3")
                 {
                     Check_Update_info(path);
+                    while (true)
+                    {
+                        Console.Write("\n  Continue update data someone...or return Menu (y/n) ");
+                        if (Console.ReadLine() == "y")
+                        {
+                            Check_Update_info(path);
+                        }
+                        else { break; }
+                    }
+
                     Console.Clear();
                 }
                 else if (check == "4")
@@ -1048,10 +1285,14 @@ namespace Dormitory_console_0._0._2
                         {
                             Write_Array_to_file_after_recover(recover); Console.Write("\n\tRecovery Done !");
                         }
-                        else { Console.Write("Not respond !"); };
+                        else { Console.Write("  Not respond !"); };
                         Console.ReadKey();
                     }
                     Console.Clear();
+                }
+                else if (check == "10")
+                {
+                    Register();
                 }
                 else                           
                 {
@@ -1060,7 +1301,6 @@ namespace Dormitory_console_0._0._2
                     Console.Clear();
                 }
                 //dung pull xem no nhu nao
-                
                 //End
             }
         }
