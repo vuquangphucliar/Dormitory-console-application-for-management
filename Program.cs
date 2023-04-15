@@ -1301,6 +1301,7 @@ namespace Dormitory_console_0._0._2
                     Console.Clear();
                 }
                 //dung pull xem no nhu nao
+                //dùng pull lần 2 haha
                 //End
             }
         }
