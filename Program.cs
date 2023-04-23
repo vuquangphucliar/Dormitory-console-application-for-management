@@ -15,6 +15,34 @@ namespace Dormitory_console_0._0._2
 {
     internal class Program
     {
+        static string input(string str = "")
+        {
+            //adapt as python
+            Console.Write(str);
+            string ret = Console.ReadLine();
+            return ret;
+        }
+        static void print(string str)
+        {
+            //adapt as python
+            Console.Write(str);
+        }
+        static void Setposandwrite(int col, int line, string str, int place_holer = -1, int timer = 0)
+        {
+            //built by myself
+            if (timer != 0)
+            {
+                Thread.Sleep(timer);
+            }
+            Console.SetCursorPosition(col, line);
+            Console.Write(str);
+
+            if (place_holer != -1)
+            {
+                Console.SetCursorPosition(col, line);
+                Console.Write(" ".PadRight(place_holer));
+            }
+        }
         /// <summary>
         /// read data from a file and return a array , can be also use for reload
         /// read file -> big string -> separate Line -> separate comma -> create new arrayy and append data
@@ -116,6 +144,38 @@ namespace Dormitory_console_0._0._2
             else { return "xxx"; }
             //show_1d_array(room9);
         }
+        static void Gui1()
+        {
+            Console.SetCursorPosition(5, 13);
+            Console.Write(" ".PadRight(50));
+
+            Console.SetCursorPosition(17, 15);
+            Console.Write(" ".PadRight(60));
+            Console.SetCursorPosition(4, 15);
+            Console.Write(">>   Name  :");
+
+            Console.SetCursorPosition(5, 16);
+            Console.Write(" ".PadRight(60));
+            Console.SetCursorPosition(4, 16);
+            Console.Write("      Age  :");
+
+
+            Console.SetCursorPosition(5, 17);
+            Console.Write(" ".PadRight(60));
+            Console.SetCursorPosition(4, 17);
+            Console.Write("    Class  :");
+
+
+            Console.SetCursorPosition(5, 18);
+            Console.Write(" ".PadRight(60));
+            Console.SetCursorPosition(4, 18);
+            Console.Write("      SSN  :");
+
+            Console.SetCursorPosition(5, 19);
+            Console.Write(" ".PadRight(60));
+            Console.SetCursorPosition(4, 19);
+            Console.Write("     Room  :\n");
+        }
         /// <summary>
         /// Create a 2d Array to take info of people want stay in this dorm, Name, AGe, Class, SSN, ,,
         /// </summary>
@@ -127,148 +187,241 @@ namespace Dormitory_console_0._0._2
             string[] sv_name = name(path);
             string[] sv_ssn = ssn(path);
             string[,] sv;
-            string[] sv2 = {"  Enter your name : ",
-                            "  Enter your age (above 18): ",
-                            "  Enter your code class : ",
-                            "  Enter your SSN (12 number): "};
             string num2;
             byte num;
             while (true)
             {
-                Console.Write("  Enter number of people: ");
+                Console.SetCursorPosition(5+24, 13);
+                Console.Write(" ".PadRight(10));
+                Console.SetCursorPosition(5, 13);
+                Console.Write("Enter number of people: ");
                 num2 = Console.ReadLine();
                 if (byte.TryParse(num2,out num))
                 {
+                    //Console.SetCursorPosition()
                     break;
                 }
-                else { Console.WriteLine("  Try Again !"); }
+                else 
+                { 
+                    Console.Write("\n\tTry Again !");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(0,15);
+                    Console.Write(" ".PadRight(30));
+                }
                    
             }
-            sv = new string[num, 5];
             //Check and take info people
-            Console.WriteLine("  The first one !");
+            //Console.WriteLine("  The first one !");
+            
+            sv = new string[num, 5];
             for (byte i = 0; i < num; i++)
             {
+                Gui1();
+                Console.SetCursorPosition(11, 13);
+                Console.Write($">> Form {i+1} <<");
                 //  check name
                 while (true)
                 {
-                    Console.Write(sv2[0]);
+                    //Console.SetCursorPosition(17, 15);
+                    //Console.Write(" ".PadRight(13));
+                    Console.SetCursorPosition(17,15);
                     string name = Console.ReadLine();
                     if (sv_name.Contains(name) )
                     {
-                        Console.WriteLine("\tYour name already exists in this list !");
+                        Console.SetCursorPosition(30,15);
+                        Console.Write("Your name already exists in this Dorm !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 15);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (name.Length > 13)
                     {
-                        Console.Write("\tThe name can't be over 13 characters");
+                        Console.SetCursorPosition(30, 15);
+                        Console.Write("The name can't be over 13 characters");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 15);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (name.Any(char.IsDigit))
                     {
-                        Console.WriteLine("\tThe name not containt number !");
+                        Console.SetCursorPosition(30, 15);
+                        Console.Write("The name not containt number !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 15);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (name.Length < 1)
                     {
-                        Console.WriteLine("\tThe name can not below one character !");
+                        Console.SetCursorPosition(30, 15);
+                        Console.Write("The name can not below one character !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 15);
+                        Console.Write(" ".PadRight(60));
                     }
                     
                     else
                     {
+                        Console.SetCursorPosition(30,15);
+                        Console.Write("Accepted  √");
                         sv[i, 0] = name;
                         break;
                     }
                 }
                 //check age
+                Console.SetCursorPosition(4, 16);
+                Console.Write(">>");
                 while (true)
                 {
                     byte age;
-                    Console.Write(sv2[1]);
-                    bool check = byte.TryParse(Console.ReadLine(), out age);
+                    Console.SetCursorPosition(17, 16);
 
+                    bool check = byte.TryParse(Console.ReadLine(), out age);
                     if (!check)
                     {
-                        Console.WriteLine("\tThe age not contain character !");
+                        Console.SetCursorPosition(30,16);
+                        Console.Write("The age not contain character !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 16);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (age < 18 || age > 26)
                     {
-                        Console.WriteLine("\tThe age can't be over 26 or below  18 !");
+                        Console.SetCursorPosition(30, 16);
+                        Console.Write("The age can't be over 26 or below  18 !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 16);
+                        Console.Write(" ".PadRight(60));
                     }
                     else
                     {
+                        Console.SetCursorPosition(30, 16);
+                        Console.Write("Accepted  √");
                         sv[i, 1] = Convert.ToString(age);
                         break;
                     }
                 }
                 //check class
+                Console.SetCursorPosition(4, 17);
+                Console.Write(">>");
                 while (true)
                 {
-                    Console.Write(sv2[2]);
+                    Console.SetCursorPosition(17, 17);
                     string code_class = Console.ReadLine();
                     if (code_class.Length == 6 && code_class.All(char.IsDigit))
                     {
+                        Console.SetCursorPosition(30,17);
+                        Console.Write("Accepted  √");
                         sv[i, 2] = code_class;
                         break;
                     }
                     else if (code_class.Length == 7 && code_class.EndsWith("TN"))
                     {
+                        Console.SetCursorPosition(30, 17);
+                        Console.Write("Accepted  √");
                         sv[i, 2] = code_class;
                         break;
                     }
-                    else { Console.WriteLine("\tValid code class : \n\t  6 number (xxxxxx)\n\t  7 number(xxxxxTN)"); }
+                    else 
+                    {
+                        Console.SetCursorPosition(30, 17);
+                        Console.Write("Expect (xxxxxx) or (xxxxxTN)");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 17);
+                        Console.Write(" ".PadRight(45));
+                    }
                 }
+                Console.SetCursorPosition(4, 18);
+                Console.Write(">>");
                 while (true)
                 {
-                    Console.Write(sv2[3]);
+                    Console.SetCursorPosition(17, 18);
                     string ssn = Console.ReadLine();
                     if (sv_ssn.Contains(ssn))
                     {
-                        Console.WriteLine("\tThis ssn have been exist in this list !");
+                        Console.SetCursorPosition(30, 18);
+                        Console.Write("This ssn have been exist in this dorm !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 18);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (ssn.All(char.IsDigit) && ssn.Length == 12)
                     {
+                        Console.SetCursorPosition(30, 18);
+                        Console.Write("Accepted  √");
                         sv[i, 3] = ssn;
                         break;
                     }
-                    else { Console.WriteLine("\tAccept only number and lenght is 12 !"); }
+                    else 
+                    {
+                        Console.SetCursorPosition(30, 18);
+                        Console.Write("Accept only number and lenght is 12 !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 18);
+                        Console.Write(" ".PadRight(60));
+                    }
 
                 }
                 //check room code
+                Console.SetCursorPosition(4, 19);
+                Console.Write(">>");
                 while (true)
                 {
-                    Console.Write("  ENter your room: ");
+                    Console.SetCursorPosition(17, 19);
+                    
+                    //Console.Write("  ENter your room: ");
                     string room = Console.ReadLine();
                     string check7 = Check_room(room);
                     if (check7 == "xxx")
                     {
-                        Console.WriteLine("\tThis room is full people!");
+                        Console.SetCursorPosition(30, 19);
+                        Console.Write("This room is full people!");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 19);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (check7 == "zzz")
                     {
-                        Console.WriteLine("\tThis room is for management !");
+                        Console.SetCursorPosition(30, 19);
+                        Console.Write("This room is for management !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 19);
+                        Console.Write(" ".PadRight(60));
                     }
                     else if (check7 == "aaa")
                     {
-                        Console.WriteLine("\tThis room is not valid !");
+                        Console.SetCursorPosition(30, 19);
+                        Console.Write("This room is invalid !");
+                        Console.ReadKey();
+                        Console.SetCursorPosition(17, 19);
+                        Console.Write(" ".PadRight(60));
                     }
                     else
                     {
                         DateTime now = DateTime.Now;
-                        Console.WriteLine("\tAccepted !");
+                        Console.SetCursorPosition(30, 19);
+                        Console.Write("Accepted  √");
                         sv[i, 4] = check7 + "     " + now;
                         break;
                     }
                 }
                 if (i == num - 1)
                 {
-                    Console.WriteLine("  Done !");
+                    Console.SetCursorPosition(18, 21);
+                    Console.Write("Collect info Done !");
+                    //Console.ReadKey();
+
                 }
                 else
                 {
-                    Console.Write("  The next one ! \n\n");
+                    Console.SetCursorPosition(20, 21);
+                    Console.Write("Continue !");
+                    Console.ReadKey(true);
+                    Console.SetCursorPosition(20, 21);
+                    Console.Write(" ".PadRight(60));
                 }
-
             } //end for loop
-
             return sv;
+
         } //end func
         /// <summary>
         /// Just Write a 2d_array into a file   , Take 2d array as parameter
@@ -321,7 +474,7 @@ namespace Dormitory_console_0._0._2
                                  sv[i, 1] + ',' +
                                  sv[i, 2] + ',' +
                                  sv[i, 3] + ',' +
-                                 sv[i, 4] + "/n");
+                                 sv[i, 4] + "\n");
             }
 
             write_file.Close();
@@ -351,10 +504,10 @@ namespace Dormitory_console_0._0._2
         /// <param name="sv"></param>
         static void Show_all_data(string[,] sv2)                                 //Show_all_data
         {
+            Console.Clear();
+
             int maxLength = 15;
-            //Console.WriteLine(maxLength);
-            //Can le phai
-            Console.WriteLine("\n\tThis's the list info of all people in this dorm !\n");
+            Console.WriteLine("\n\t\tThis's the list info of all people in this dorm !\n");
             Console.WriteLine("   Name".PadRight(maxLength) +
                               "  Age".PadRight(maxLength) +
                               "  Class".PadRight(maxLength) +
@@ -377,23 +530,32 @@ namespace Dormitory_console_0._0._2
         /// <param name="path"></param>
         static void Del_array(string path)                                                    //Delete
         {
-            StreamWriter del = new StreamWriter(path);
-            Console.WriteLine("You want delete this Data set, No Way !" +
-                "\nKeep your mind clear boy , once go never come (y/n): ");
-
+            Console.SetCursorPosition(0, 13);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 15);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 16);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 18);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(10, 13);
+            Console.Write("You want delete this Data set, No Way !" +
+                "\n\tKeep your mind clear boy , once go never come (y/n): ");
 
             if (Console.ReadLine() == "y")
             {
+                StreamWriter del = new StreamWriter(path);
                 del.WriteLine("____________,_________,________,____________,____");      //this is the root of all problem
                 del.Close();
-                Console.WriteLine("Oh, you have my respect, Boy ");
-                Console.Write("Continue your work, right !..");
+                //Console.
+                Console.WriteLine("\n\t\tOh, you have my respect, Boy ");
+                Console.Write("\t\tContinue your work, right !..");
                 Console.ReadKey();
             }
             else
             {
-                Console.WriteLine("I know, Don't be stupid, I like this guy !");
-                Console.Write("Tap anywhere to skip !");
+                Console.WriteLine("\n\t\tI know, Don't be stupid, I like this guy !");
+                Console.Write("\t\tTap anywhere to return !");
                 Console.ReadKey();
             }
 
@@ -408,13 +570,12 @@ namespace Dormitory_console_0._0._2
                             "  ^**** Dormitory Console Applications for Management ****^\n" +
                             "  ^*******************************************************^\n" +
                             "  ** Menu:  \n" +
-                            "\t     1,/Add/".PadRight(19) + "4,/Delete/\n" +
-                            "\t     2,/Find/".PadRight(19) + "5,/Sort by alphabet/\n" +
-                            "\t     3,/Update/".PadRight(19) + "6,/Show and Statistic/\n" +
-                            "\t     7,/Exit/".PadRight(19) + "8,/Obout us/\n" +
-                            "\t     10, /Register/\n" +
-                            "\t\t9,/Backup and. Recovery/\n" +
-                            " >> Option : ");
+                            "\t   1,/Add     /".PadRight(22) + "4,/Delete              /\n" +
+                            "\t   2,/Find    /".PadRight(22) + "5,/Sort by alphabet    /\n" +
+                            "\t   3,/Update  /".PadRight(22) + "6,/Show and Statistic  /\n" +                 
+                            "\t   7,/Exit    /".PadRight(22) + "8,/Obout us            /\n" +
+                            "\t   9,/Register/".PadRight(21) + "10,/Backup and Recovery /\n"+
+                            "\n  >> Option : ");
             string check = Console.ReadLine();
             return check;
         }
@@ -422,7 +583,21 @@ namespace Dormitory_console_0._0._2
         static void Take_and_write()                                              //Take and write info into file, 2 in 1
         {
             string[,] sv = Take_info();
-            Write_Array_to_file(sv);
+            Console.SetCursorPosition(10,22);
+            Console.Write("Are you sure with this info ! (y/n) ");
+            if (Console.ReadLine()  == "y")
+            {
+                Console.SetCursorPosition(10, 23);
+                Console.Write("Add new member Completely !");
+                Write_Array_to_file(sv);
+            }
+            else
+            {
+                Console.SetCursorPosition(10, 23);
+                Console.Write("Data have been clear !");
+                Console.ReadKey(true);
+            }
+
         }
         /// <summary>
         /// Read and show , merge funtion
@@ -437,14 +612,7 @@ namespace Dormitory_console_0._0._2
         /// A funny function to write word slowly
         /// </summary>
         /// <param name="story"></param>
-        static void write_slowly(string story)                                                 //Write slowly
-        {
-            foreach (char y in story)
-            {
-                Console.Write(y);
-                Thread.Sleep(55);
-            }
-        }
+        
         /// <summary>
         /// find function , find info someone by their name
         /// </summary>
@@ -460,18 +628,31 @@ namespace Dormitory_console_0._0._2
 
                 if (sv2[i, col] == key_word)
                 {
-                    Console.Write($"  Yeah !, I've found info about him ,{sv2[i, col]}" +
-                        $"\n  You wanna see it : (y/n) ");
+                    Console.SetCursorPosition(8, 17);
+                    Console.Write($"Done , I've found info about him ,{sv2[i, col]}" +
+                        $"\n\n\tYou wanna see it : (y/n) ");
                     if (Console.ReadLine() == "y")
                     {
-                        string story = $"\n  His name is {sv2[i, 0]} , Now he's {sv2[i, 1]} year old " +
-                                       $"\n  And He's staying in room {sv2[i, 4].Split(' ')[0]}" +
-                                       $"\n  His SSN is {sv2[i, 3]}" +
-                                       $"\n  Student of {sv2[i, 2]} class !" +
-                                       $"\n   SO that's all infomation about him !\n";
-                        write_slowly(story);
+
+                        string story = $"\n\t Name  :  {sv2[i, 0]}  \n" +
+                                       $"\n\t  Age  :  {sv2[i, 1]} years old \n" +
+                                       $"\n\t  SSN  :  {sv2[i, 3]}\n" +
+                                       $"\n\tClass  :  {sv2[i, 2]} \n" +
+                                       $"\n\t Room  :  {sv2[i, 4].Split(' ')[0]}\n";
+                        Console.SetCursorPosition(8, 13);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 15);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 17);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 19);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 13);
+
+                        Console.WriteLine("\tInfo to you");
+                        Console.Write(story);
                     }
-                    else { Console.WriteLine("  Next !"); }
+                    else {Console.SetCursorPosition(15,20); Console.WriteLine("Next !");Console.ReadKey(); }
                 }
                 else
                 {
@@ -480,41 +661,46 @@ namespace Dormitory_console_0._0._2
             }
             if (els == sv2.Length / 5)
             {
-                Console.WriteLine("\tOpps , I have no information about him !");
+                Console.SetCursorPosition(8,17);
+                Console.WriteLine("Opps , I have no information about him !\n");
             }
         }
-        //
         static void Find_info(string path)                                                        //Find_info
         {
-            Console.Write("  You want find info by what:" +
-            "\n  1,/Name/" + "\t2,Age(Not Supported)" + 
-            "\n  3,/SSN/" +  "\t4,Room(Not supported)" + 
-            "\n  5,Class(Not Supported)" +
-            "\n >>Options : ");
             string check;
             while (true)
             {
+
+                Console.SetCursorPosition(8, 13);
+                Console.Write(" ".PadRight(60));
+                Console.SetCursorPosition(8, 15);
+                Console.Write(" ".PadRight(60));
+                Console.SetCursorPosition(8, 17);
+                Console.Write(" ".PadRight(60));
+                Console.SetCursorPosition(8, 19);
+                Console.Write(" ".PadRight(60));
+                Console.SetCursorPosition(8, 13);
+                Console.SetCursorPosition(8, 13);
+                Console.Write("You want find info by name or SSN (n/s) ");
+                Console.SetCursorPosition(49, 13);
+                Console.Write(" ".PadRight(30));
+                Console.SetCursorPosition(49, 13);
                 check = Console.ReadLine();
-                if (check == "1")
+                if (check == "n")
                 {
-                    Console.Write("  Give me the name: ");
+                    Console.Write("\n\tGive me the name: ");
                     string name = Console.ReadLine();
                     Find_(path, name, 0);
                     break;
                 }
-                else if (check == "3")
+                else if (check == "s")
                 {
-                    Console.Write("  Your SSN");
+                    Console.Write("\n\tYour SSN");
                     string ssn = Console.ReadLine();
                     Find_(path, ssn, 3);
                     break;
                 }
-                else if (check == "5")
-                {
-                    Console.WriteLine("\tNot supported !");
-
-                }
-                else { Console.WriteLine("  Try Again !"); }
+                else { Console.Write("\n\tTry Again !"); }
             }
 
         }
@@ -538,96 +724,183 @@ namespace Dormitory_console_0._0._2
             {
                 if (sv2[i, 0] == key_word)
                 {
-                    Console.Write($"  You mean {sv2[i, 0]} with ssn is {sv2[i, 3]}" +
-                                 "\n  Update now (y/n) ");
+                    Console.Write($"\n\tYou mean {sv2[i, 0]} with ssn is {sv2[i, 3]}" +
+                                 "\n\n\tUpdate now (y/n) ");
+
                     if (Console.ReadLine() == "y")
                     {
+                        //Update
                         //check age
+                        Console.SetCursorPosition(8, 13);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 17);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 15);
+                        Console.Write(" ".PadRight(60));
+                        Console.SetCursorPosition(8, 19);
+                        Console.Write(" ".PadRight(60));
+
+                        Console.SetCursorPosition(12, 13);
+                        Console.Write($"Update  {key_word}");
+
+                        Console.SetCursorPosition(5, 15);
+                        Console.Write(">>   New Age  :");
+                        Console.SetCursorPosition(5, 17);
+                        Console.Write("   New Class  :");
+                        Console.SetCursorPosition(5, 19);
+                        Console.Write("     New SSN  :");
+                        Console.SetCursorPosition(5, 21);
+                        Console.Write("    New Room  :");
+
                         while (true)
                         {
+                            
+                            Console.SetCursorPosition(21, 15);
                             byte age;
-                            Console.Write(sv4[0]);
                             bool check = byte.TryParse(Console.ReadLine(), out age);
                             if (!check)
                             {
-                                Console.WriteLine("\tThe age not contain character !");
+                                Console.SetCursorPosition(35,15);
+                                Console.Write("The age not contain character !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 15);
+                                Console.Write(" ".PadRight(60));
                             }
                             else if (age < 18 || age > 26)
                             {
-                                Console.WriteLine("\tThe age can't be over 26 or below  18 !");
+                                Console.SetCursorPosition(35, 15);
+                                Console.Write("The age can't be over 26 or below  18 !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 15);
+                                Console.Write(" ".PadRight(60));
+
                             }
                             else
                             {
+                                Console.SetCursorPosition(35,15);
+                                Console.Write(" ".PadRight(30));
+                                Console.SetCursorPosition(35, 15);
+                                Console.Write("Accepted  √");
                                 sv2[i, 1] = Convert.ToString(age);
                                 break;
                             }
                         }
+                        Console.SetCursorPosition (5, 17);
+                        Console.Write(">>");
                         //check class
                         while (true)
                         {
-                            Console.Write(sv4[1]);
+                            Console.SetCursorPosition(21, 17);
                             string code_class = Console.ReadLine();
                             if (code_class.Length == 6 && code_class.All(char.IsDigit))
                             {
+                                Console.SetCursorPosition(35, 17);
+                                Console.Write("Accepted  √");
                                 sv2[i, 2] = code_class;
                                 break;
                             }
                             else if (code_class.Length == 7 && code_class.EndsWith("TN"))
                             {
+                                Console.SetCursorPosition(35, 17);
+                                Console.Write("Accepted  √");
                                 sv2[i, 2] = code_class;
                                 break;
                             }
-                            else { Console.WriteLine("\tValid code class : \n\t  6 number (xxxxxx)\n\t  7 number(xxxxxTN)"); }
+                            else
+                            {
+                                Console.SetCursorPosition(35, 17);
+                                Console.Write("Expect (xxxxxx) or (xxxxxTN)");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 17);
+                                Console.Write(" ".PadRight(45));
+                            }
                         }
+                        Console.SetCursorPosition(5, 19);
+                        Console.Write(">>");
                         while (true)
                         {
-                            Console.Write(sv4[2]);
+                            Console.SetCursorPosition(21, 19);
                             string ssn = Console.ReadLine();
                             if (sv_ssn.Contains(ssn))
                             {
-                                Console.WriteLine("This ssn have been exist in this list !");
+                                Console.SetCursorPosition(35, 19);
+                                Console.Write("This ssn have been exist in this dorm !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 19);
+                                Console.Write(" ".PadRight(60));
                             }
                             else if (ssn.All(char.IsDigit) && ssn.Length == 12)
                             {
+                                Console.SetCursorPosition(35, 19);
+                                Console.Write("Accepted  √");
                                 sv2[i, 3] = ssn;
                                 break;
                             }
-                            else { Console.WriteLine("\tAccept only number and lenght is 12 !"); }
+                            else
+                            {
+                                Console.SetCursorPosition(35, 19);
+                                Console.Write("Accept only number and lenght is 12 !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 19);
+                                Console.Write(" ".PadRight(60));
+                            }
 
                         }
                         //check room code
+                        Console.SetCursorPosition(5, 21);
+                        Console.Write(">>");
                         while (true)
                         {
-                            Console.Write("  ENter your room: ");
+                            Console.SetCursorPosition(21, 21);
+
+                            //Console.Write("  ENter your room: ");
                             string room = Console.ReadLine();
                             string check7 = Check_room(room);
                             if (check7 == "xxx")
                             {
-                                Console.WriteLine("\tThis room is full people!");
+                                Console.SetCursorPosition(35, 21);
+                                Console.Write("This room is full people!");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 21);
+                                Console.Write(" ".PadRight(60));
                             }
                             else if (check7 == "zzz")
                             {
-                                Console.WriteLine("\tThis room is for management !");
+                                Console.SetCursorPosition(35, 21);
+                                Console.Write("This room is for management !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 21);
+                                Console.Write(" ".PadRight(60));
                             }
                             else if (check7 == "aaa")
                             {
-                                Console.WriteLine("\tThis room is not valid !");
+                                Console.SetCursorPosition(35, 21);
+                                Console.Write("This room is invalid !");
+                                Console.ReadKey();
+                                Console.SetCursorPosition(21, 21);
+                                Console.Write(" ".PadRight(60));
                             }
                             else
                             {
                                 DateTime now = DateTime.Now;
-                                Console.WriteLine("\tAccepted !");
+                                Console.SetCursorPosition(35, 21);
+                                Console.Write("Accepted  √");
                                 sv2[i, 4] = check7 + "     " + now;
                                 break;
                             }
                         }
-                        Console.WriteLine("\n\tYour info have been updated !");
-                        //wrrite to file
-                        Write_Array_to_file_update(sv2);
-                        Console.WriteLine("  Tap to next !");
-                        Console.ReadKey();
+                        Console.SetCursorPosition (10, 23); 
+                        Console.Write("Are you sure with these info (y/n) ");
+                        if (Console.ReadLine() == "y")
+                        {
+                            Write_Array_to_file_update(sv2);
+                            Console.Write("\t\tUpdate Complete !");
+                            Console.ReadKey();
+
+                        }
+                        else { Console.WriteLine("Waste my time !");Console.ReadKey(); }
                     }
-                    else { Console.Write("  Waste my time !");Console.ReadKey(); }
+                    else { Console.Write("\n\tWaste my time !");Console.ReadKey(); }
                 }
                 else
                 {
@@ -663,14 +936,26 @@ namespace Dormitory_console_0._0._2
         /// <param name="path"></param>
         static void Check_Update_info(string path)                                                        //Update info
         {
-            Console.Write("  Give me the name: ");
+            Console.Write("\n\tGive me the name: ");
             string name = Console.ReadLine();
             Update(path, name);
             
         }
         static string[,] delete_by_name(string[,] name_before)                //delete by name
         {
+            Console.SetCursorPosition(0, 13);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 15);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 16);
+            Console.Write(" ".PadRight(40));
+            Console.SetCursorPosition(0, 18);
+            Console.Write(" ".PadRight(45));
+            Console.SetCursorPosition(0, 20);
+            Console.Write(" ".PadRight(50));
+            Console.SetCursorPosition(10,13);
             //lấy phần tử thứ nhất làm 1 cái array để so sánh
+            Console.Write("Delete info by name");
             string[] name3 = new string[name_before.Length / 5];
             for (int i = 0; i < name_before.Length / 5; i++)
             {
@@ -678,6 +963,7 @@ namespace Dormitory_console_0._0._2
             }
             //array after delete one 
             string[,] name_after = new string[name_before.Length / 5 - 1, 5];
+            Console.SetCursorPosition(10, 15);
             Console.Write("  Enter youu name: ");
             string key = Console.ReadLine();
             if (name3.Contains(key))
@@ -704,13 +990,13 @@ namespace Dormitory_console_0._0._2
                         name_after[o, 4] = name_before[o, 4];
                     }
                 }
-                Console.WriteLine($"  Info of {key} have been delete ,I don't talk too more !");
+                Console.Write($"\n\tInfo of {key} have been deleted in one sec !");
                 Console.ReadKey();
                 return name_after;
             }
             else
             {
-                Console.Write("  This name not exist in this list ! ");
+                Console.Write("\n\t\tThis name not exist in this list ! \n");
                 Console.ReadKey();
                 return name_before;
             }
@@ -858,6 +1144,7 @@ namespace Dormitory_console_0._0._2
 
         static void Statistic(string[,] array)                       //Statistic
         {
+            Console.Clear();
             Console.WriteLine("\n\t\tStatistic Quantity of each room ");
             string[] room = code_room2();
             //take unik element
@@ -874,11 +1161,11 @@ namespace Dormitory_console_0._0._2
             //Console.WriteLine(unik.Length); 
             //Console.WriteLine(unik_sl.Length);
 
-            Console.WriteLine("\n\tInd   Room\tQuantity    Member");
-            Console.WriteLine("\t _    ____\t________    ______");
+            Console.WriteLine("\n   Ind    Room   Quantity    Member");
+            Console.WriteLine(  "    _     ____   ________    ______");
             for (byte k = 1; k < unik.Length; k++)
             {
-                Console.Write($"\t {k}".PadRight(7) +$"{unik[k]}\t   {unik_sl[k]}        ");
+                Console.Write($"    {k}".PadRight(10) +$"{unik[k]}       {unik_sl[k]}        ");
                 for (int o = 1; o < array.Length / 5; o++)
                 {
                     if (unik[k] == array[o, 4].Split(' ')[0])
@@ -921,10 +1208,21 @@ namespace Dormitory_console_0._0._2
 
         static void Register()
         {
+            Console.Clear();
+            Console.Write("\n  ^*******************************************************^\n" +
+                            "  ^**** Dormitory Console Applications for Management ****^\n" +
+                            "  ^*******************************************************^\n" +
+                            "  ** Menu:  \n" +
+                            "\t   1,/Add     /".PadRight(22) + "4,/Delete              /\n" +
+                            "\t   2,/Find    /".PadRight(22) + "5,/Sort by alphabet    /\n" +
+                            "\t   3,/Update  /".PadRight(22) + "6,/Show and Statistic  /\n" +
+                            "\t   7,/Exit    /".PadRight(22) + "8,/Obout us            /\n" +
+                            "\t   9,/Register/".PadRight(21) + "10,/Backup and Recovery /\n" +
+                            "\n  >> Option : 9");
             string[] pre_acc_pas  = Load_account2();
             
             //Check thoong tin caur nguwoif danwg kis
-            Console.WriteLine("\n\t\t  Register !");
+            Console.WriteLine("\n\n\t\t  Register !");
             Console.SetCursorPosition(9, 15);
             Console.Write(">>   Account  :");
 
@@ -947,7 +1245,7 @@ namespace Dormitory_console_0._0._2
                 {
                     //cái này để xóa mấy cái kí tự đã nhập cũ đi để thay chỗ nhập mới
                     Console.SetCursorPosition(40,15);
-                    Console.Write("This account have alreadt exist !");
+                    Console.Write("This account have already exist !");
                 }
                 else
                 {
@@ -991,7 +1289,7 @@ namespace Dormitory_console_0._0._2
                 Console.Write(" ".PadRight(15));
                 Console.SetCursorPosition(24, 17);
                 pass = Console.ReadLine();
-                if (pass.Length > 1 && pass.All(char.IsDigit))
+                if (pass.Length == 4 && pass.All(char.IsDigit))
                 {
                     Console.SetCursorPosition(24+12,17);
                     Console.Write(" ".PadRight(33));
@@ -1000,13 +1298,40 @@ namespace Dormitory_console_0._0._2
                 else
                 {
                     Console.SetCursorPosition(39,17);
-                    Console.Write("Accept only number !");
+                    Console.Write("Expect 4 numbers !");
                 }
 
             }
-            Console.SetCursorPosition (7, 19);
-            Console.Write("This account will register with your info below (y/n) ");
-            if (Console.ReadLine()  == "y")
+            Console.SetCursorPosition(9, 18);
+            Console.Write(">>");
+            Console.Write(" Re-enter your password : ") ;
+            Console.SetCursorPosition (37, 18);
+            while (true)
+            {
+
+                string re_pass  = Console.ReadLine();
+                if (re_pass == pass)
+                {
+                    Console.SetCursorPosition(45, 18);
+                    Console.Write("√");
+                    break;
+                }
+                else
+                {
+                    Console.SetCursorPosition(45, 19);
+                    Console.Write("InCorrect !");
+                    Console.ReadKey();
+                    Console.SetCursorPosition(37, 18);
+                    Console.Write(" ".PadRight(10));
+                    Console.SetCursorPosition(37, 19);
+                    Console.Write(" ".PadRight(50));
+                    Console.SetCursorPosition(37, 18);
+                }
+
+            }
+            Console.SetCursorPosition (7, 20);
+            Console.Write("Enter PIN code to comfirm : ");
+            if (Console.ReadLine()  == "0000")
             {
 
                 Console.SetCursorPosition(15, 20);
@@ -1015,16 +1340,99 @@ namespace Dormitory_console_0._0._2
                 StreamWriter write = new StreamWriter("C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/account_password.txt",true);
                 write.Write(acc_rol_pas); write.Close();
 
-                Console.Write("\n\tRegister Complete !");
+                Console.Write("\n\n\tRegister Complete !");
                 Console.ReadKey();
             }
             else
             {
-                Console.SetCursorPosition(15, 20);
+                Console.SetCursorPosition(15, 21);
                 Console.Write("Register fail !");
+                Console.ReadKey ();
             }
+        }
+        static void Login_for_regis()
+        {
+            //Check Log in
+            string[] pre_acc = Load_account();
+
+            while (true)
+            {
+                Console.Clear();
+                Console.SetCursorPosition(10, 1);
+                Console.Write("<> Relogin <> ");
+
+                Console.SetCursorPosition(2, 3);
+                Console.Write(">> User name  :");
+
+                Console.SetCursorPosition(2, 4);
+                Console.Write("        Role  :");
+
+                Console.SetCursorPosition(2, 5);
+                Console.Write("    Password  :");
+
+                Console.SetCursorPosition(17, 3);
+                string tk = Console.ReadLine();
+
+                Console.SetCursorPosition(2, 4);
+                Console.Write(">> ");
+
+                Console.SetCursorPosition(17, 4);
+                string role = Console.ReadLine();
+
+                Console.SetCursorPosition(2, 5);
+                Console.Write(">> ");
+
+                Console.SetCursorPosition(17, 5);
+
+                string password = ""; //Tạo một chuỗi rỗng.
+                //Console.Write("Please enter your password: ");
+
+                while (true)
+                {
+                    // Lấy phím đang được nhấn từ bàn phím.
+                    ConsoleKeyInfo key = Console.ReadKey(true);
+
+                    // Nếu phím Enter được ấn, thoát khỏi vòng lặp.
+                    if (key.Key == ConsoleKey.Enter)
+                    {
+                        break;
+                    }
+
+                    // Nếu phím Backspace được ấn và độ dài của chuỗi lớn hơn 0, xóa ký tự cuối cùng ra khỏi chuỗi.
+                    else if (key.Key == ConsoleKey.Backspace && password.Length > 0)
+                    {
+                        password = password.Remove(password.Length - 1);
+                        Console.Write("\b \b"); // Xóa ký tự với backspace.
+                    }
+
+                    // Trường hợp còn lại, thêm ký tự đó vào chuỗi.
+                    else if (char.IsLetterOrDigit(key.KeyChar))
+                    {
+                        password += key.KeyChar;
+                        Console.Write("*"); // In dấu * để ẩn ký tự đã nhập.
+                    }
+                }
+
+                //string mk = Console.ReadLine();
 
 
+                string acc_pas = tk + ',' + role + "," + password;
+                //Console.Write(acc_pas);
+                if (pre_acc.Contains(acc_pas) )
+                {
+                    if (role == "manage")
+                    {
+                        break;
+                    }
+                    else { Setposandwrite(13, 7, "Need management permission !");Console.ReadKey(); }
+                }
+                else
+                {
+                    Console.SetCursorPosition(13, 4);
+                    Console.Write("\n\n\n\tIncorrect account or password ! ");
+                    Console.ReadKey();
+                }
+            }
 
         }
         static void Login()
@@ -1096,8 +1504,8 @@ namespace Dormitory_console_0._0._2
                 //Console.Write(acc_pas);
                 if (pre_acc.Contains(acc_pas))
                 {
-                    Console.Write("\n\n\tWelcome Back Sir !");
-                    Console.ReadKey();
+                    //Console.Write($"\n\n\tWelcome Back, {tk} !");
+                    //Console.ReadKey();
                     break;
                 }
                 else
@@ -1108,6 +1516,27 @@ namespace Dormitory_console_0._0._2
                 }
             }
 
+        }
+
+        
+        static void loading()
+        {
+            byte time = 0;
+            while (true)
+            {
+                Console.CursorVisible = false;
+                Thread.Sleep(1000);
+                Setposandwrite(5, 7, " ", 30, 1);
+                Setposandwrite(5, 7, " Connecting to sever.", -1);
+                Setposandwrite(5, 7, " Connecting to sever..", -1, 1000);
+                Setposandwrite(5, 7, " Connecting to sever...", -1, 1000);
+                Setposandwrite(5, 7, " Connecting to sever....", -1, 1000);
+                time++;
+                if (time == 3)
+                {
+                    break;
+                }
+            }
         }
         /// <summary>
         /// Our main actor, control all of these function 
@@ -1127,7 +1556,9 @@ namespace Dormitory_console_0._0._2
             string check;
 
             //Menu 
-            Login();
+            //Login();
+            //loading();
+            Console.CursorVisible = true;
             while (true)
             {
                 //Check menu
@@ -1136,15 +1567,7 @@ namespace Dormitory_console_0._0._2
                 if (check == "1")
                 {
                     Take_and_write();
-                    while (true)
-                    {
-                        Console.Write("  Continue taking info...(y/n) ");
-                        if (Console.ReadLine() == "y")
-                        {
-                            Take_and_write();
-                        }
-                        else { break; }
-                    }
+                    Console.ReadKey(true);
                     Console.Clear();
                 }
                 else if (check == "2")
@@ -1165,25 +1588,17 @@ namespace Dormitory_console_0._0._2
                 else if (check == "3")
                 {
                     Check_Update_info(path);
-                    while (true)
-                    {
-                        Console.Write("\n  Continue update data someone...or return Menu (y/n) ");
-                        if (Console.ReadLine() == "y")
-                        {
-                            Check_Update_info(path);
-                        }
-                        else { break; }
-                    }
-
+                                                      
                     Console.Clear();
                 }
                 else if (check == "4")
                 {
                     //option 4
+                    Console.SetCursorPosition(8, 13);
                     Console.WriteLine("  You have two choice !" +
-                                    "\n\t 1) delete all data" +
-                                    "\n\t 2) delete one record");
-                    Console.Write(" >>Option : ");
+                                    "\n\n\t\t 1) delete all data" +
+                                    "\n\t\t 2) delete one record");
+                    Console.Write("\n\t>>Option : ");
                     string check1 = Console.ReadLine();
                     if (check1 == "1")
                     {
@@ -1191,17 +1606,9 @@ namespace Dormitory_console_0._0._2
                     }
                     else if (check1 == "2")
                     {
-                        Console.WriteLine("  Delete info by name");
+                        
                         delele_by_name_and_write_file(path);
-                        while (true)
-                        {
-                            Console.Write("\n  Continue delete someone...or return Menu (y/n) ");
-                            if (Console.ReadLine() == "y")
-                            {
-                                delele_by_name_and_write_file(path);
-                            }
-                            else { break; }
-                        }
+                        
                     }
                     Console.Clear();
                 }
@@ -1209,13 +1616,13 @@ namespace Dormitory_console_0._0._2
                 {
                     string[,] sv4 = ReLoad_Read_file(path);
                     string[] name2 = name_sorted(path);
-                    Console.Write("  Your list will be sort a-z by name !\n" +
-                        "  Are you sure, (y/n) ");
+                    Console.Write("\n\tYour list will be sort a-z by name !\n" +
+                        "\t  Are you sure, (y/n) ");
                     if ( Console.ReadLine() == "y")
                     {
                         string[,] name4 = sort_sv_by_name(sv4, name2);
                         Write_Array_to_file_after_sort(name4);
-                        Console.Write("  Your list have been sort by a-z, \n  Check with show option !");
+                        Console.Write("\n\tYour list have been sort by a-z, \n\t    Check with option show !");
                         Console.ReadKey();
                     }
                     Console.Clear();
@@ -1244,20 +1651,22 @@ namespace Dormitory_console_0._0._2
                 }
                 else if (check == "8")
                 {
-                    Console.Write(  "\n\tOur console-based dormitory management program" +
-                                    "\n       is designed to make life easier for dorm managers and students alike." +
-                                    "\n      With the ability to add, edit, delete, update, search, and sort records, " +
-                                    "\n      managing dormitory information has never been easier or more efficient. " +
-                                    "\n      Our program also includes backup and recovery features ensuring that all data is safe and secure." +
-                                    "\n      Our program was created by Lovecrush, a team of dedicated developers " +
-                                    "\n      committed to providing innovative solutions for everyday problems. " +
-                                    "\n      We believe that our program is the ideal choice for dorm managers " +
-                                    "\n      looking to streamline their operations and ensure that students are comfortable and happy in " +
-                                    "\n      their living environment.\n\n  Tap enywhere to skip !");
+                    Console.Clear();
+                    Console.SetCursorPosition(3, 3);
+                    Console.Write(  "\tOur console-based dormitory management program" +
+                                    "\n\tis designed to make life easier for dorm managers and students alike." +
+                                    "\n\tWith the ability to add, edit, delete, update, search, and sort records, " +
+                                    "\n\tmanaging dormitory information has never been easier or more efficient. " +
+                                    "\n\tOur program also includes backup and recovery features ensure that data is safe and secure" +
+                                    "\n\tOur program was created by Lovecrush, a team of dedicated developers " +
+                                    "\n\tcommitted to providing innovative solutions for everyday problems. " +
+                                    "\n\tWe believe that our program is the ideal choice for dorm managers " +
+                                    "\n\tlooking to streamline their operations and ensure that students are comfortable and \n\thappy in " +
+                                    "their living environment.");
                     Console.ReadKey();
                     Console.Clear();
                 }
-                else if (check == "9")
+                else if (check == "10")
                 {
                     Console.WriteLine("\tBackup(b) and Recovery(v) ");
                     Console.Write("  You want backup or recovery :(b/v) ");
@@ -1283,20 +1692,22 @@ namespace Dormitory_console_0._0._2
                         Console.Write("  Are you sure , data will be recovery as your data set !(Y/n) ");
                         if (Console.ReadLine() == "y")
                         {
-                            Write_Array_to_file_after_recover(recover); Console.Write("\n\tRecovery Done !");
+                            Write_Array_to_file_after_recover(recover); 
+                            Console.Write("\n\tRecovery Done !");
                         }
                         else { Console.Write("  Not respond !"); };
                         Console.ReadKey();
                     }
                     Console.Clear();
                 }
-                else if (check == "10")
+                else if (check == "9")
                 {
+                    Login_for_regis();
                     Register();
                 }
                 else                           
                 {
-                    Console.Write("\tChoose an option by enter number from 1 to 9\n     You got it, Right !\t");
+                    Console.Write("\n\tChoose an option by enter number from 1 to 9\n     You got it, Right !");
                     Console.ReadKey();  
                     Console.Clear();
                 }
