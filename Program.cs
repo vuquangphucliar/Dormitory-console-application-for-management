@@ -15,18 +15,18 @@ namespace Dormitory_console_0._0._2
 {
     internal class Program
     {
-        static string input(string str = "")
-        {
-            //adapt as python
-            Console.Write(str);
-            string ret = Console.ReadLine();
-            return ret;
-        }
-        static void print(string str)
-        {
-            //adapt as python
-            Console.Write(str);
-        }
+        //static string input(string str = "")
+        //{
+        //    //adapt as python
+        //    Console.Write(str);
+        //    string ret = Console.ReadLine();
+        //    return ret;
+        //}
+        //static void print(string str)
+        //{
+        //    //adapt as python
+        //    Console.Write(str);
+        //}
         static void Setposandwrite(int col, int line, string str, int place_holer = -1, int timer = 0)
         {
             //built by myself
@@ -158,7 +158,7 @@ namespace Dormitory_console_0._0._2
             Console.Write(" ".PadRight(60));
             Console.SetCursorPosition(4, 16);
             Console.Write("      Age  :");
-
+                      
 
             Console.SetCursorPosition(5, 17);
             Console.Write(" ".PadRight(60));
@@ -208,7 +208,6 @@ namespace Dormitory_console_0._0._2
                     Console.SetCursorPosition(0,15);
                     Console.Write(" ".PadRight(30));
                 }
-                   
             }
             //Check and take info people
             //Console.WriteLine("  The first one !");
@@ -234,7 +233,7 @@ namespace Dormitory_console_0._0._2
                         Console.SetCursorPosition(17, 15);
                         Console.Write(" ".PadRight(60));
                     }
-                    else if (name.Length > 13)
+                    else if (name.Length > 10)
                     {
                         Console.SetCursorPosition(30, 15);
                         Console.Write("The name can't be over 13 characters");
@@ -258,7 +257,6 @@ namespace Dormitory_console_0._0._2
                         Console.SetCursorPosition(17, 15);
                         Console.Write(" ".PadRight(60));
                     }
-                    
                     else
                     {
                         Console.SetCursorPosition(30,15);
@@ -521,8 +519,8 @@ namespace Dormitory_console_0._0._2
                     sv2[i, 2].PadRight(maxLength) +
                     sv2[i, 3].PadRight(maxLength) +
                     sv2[i, 4]);
-            }
-            Console.WriteLine($"\n\tTable info : {sv2.GetLength(0) - 1}(row),{sv2.GetLength(1)}(column)");
+            }                                                                                         
+            Console.WriteLine($"\n\tTable info : {sv2.GetLength(0) - 1}(row),6(column)");
         }
         /// <summary>
         /// del array, acctually , write a base string to mark it and ready to overwrite
@@ -530,7 +528,7 @@ namespace Dormitory_console_0._0._2
         /// <param name="path"></param>
         static void Del_array(string path)                                                    //Delete
         {
-            Console.SetCursorPosition(0, 13);
+            Console.SetCursorPosition(0, 13);                          
             Console.Write(" ".PadRight(40));
             Console.SetCursorPosition(0, 15);
             Console.Write(" ".PadRight(40));
@@ -570,14 +568,109 @@ namespace Dormitory_console_0._0._2
                             "  ^**** Dormitory Console Applications for Management ****^\n" +
                             "  ^*******************************************************^\n" +
                             "  ** Menu:  \n" +
-                            "\t   1,/Add     /".PadRight(22) + "4,/Delete              /\n" +
-                            "\t   2,/Find    /".PadRight(22) + "5,/Sort by alphabet    /\n" +
-                            "\t   3,/Update  /".PadRight(22) + "6,/Show and Statistic  /\n" +                 
-                            "\t   7,/Exit    /".PadRight(22) + "8,/Obout us            /\n" +
-                            "\t   9,/Register/".PadRight(21) + "10,/Backup and Recovery /\n"+
+                            "\t  1,//Add      //".PadRight(22) + "4,\\\\Delete           \\\\\n" +
+                            "\t  2,//Find     //".PadRight(22) + "5,\\\\Sort by A-Z      \\\\\n" +
+                            "\t  3,//Update   //".PadRight(22) + "6,\\\\Show - Statistic \\\\\n" +                 
+                            "\t  7,//Exit     //".PadRight(22) + "8,\\\\Obout us         \\\\\n" +
+                            "\t  9,//Register //".PadRight(21) + "10,\\\\Backup - Restore \\\\\n"+
                             "\n  >> Option : ");
             string check = Console.ReadLine();
             return check;
+        }
+        static void menu_move()
+        {
+            Setposandwrite(1, 1, "");
+            Console.CursorVisible = false;
+            string str = "^*******************************************************^\r\n  ^**** Dormitory Console Applications for Management ****^\r\n  ^*******************************************************^";
+
+            int timer = 1000 / 120;
+
+
+            Setposandwrite(3, 1, "");
+            foreach (char i in str)
+            {
+                Console.Write(i);
+                Thread.Sleep(timer);
+            }
+
+            byte x = 3, y = 23;
+            while (y != 4)
+            {
+                Setposandwrite(x, y, "** Menu:\n            ", -1, 30);
+                y--;
+            }
+            byte x1 = 1, y1 = 6;
+
+            while (x1 != 11)
+            {
+                Setposandwrite(x1, y1, " 1,//Add      // ", -1, timer);
+                x1++;
+
+            }
+            byte x6 = 50, y6 = 6;
+            while (x6 != 29)
+            {
+                Setposandwrite(x6, y6, "4,\\\\Delete           \\\\ ", -1, timer);
+                x6--;
+            }
+            byte x2 = 1, y2 = 7;
+
+            while (x2 != 11)
+            {
+                Setposandwrite(x2, y2, " 2,//Find     //", -1, timer);
+                x2++;
+
+            }
+            byte x7 = 50, y7 = 7;
+            while (x7 != 29)
+            {
+                Setposandwrite(x7, y7, "5,\\\\Sort by A-Z      \\\\ ", -1, timer);
+                x7--;
+            }
+            byte x3 = 1, y3 = 8;
+
+            while (x3 != 11)
+            {
+                Setposandwrite(x3, y3, " 3,//Update   //", -1, timer);
+                x3++;
+
+            }
+            byte x8 = 50, y8 = 8;
+            while (x8 != 29)
+            {
+                Setposandwrite(x8, y8, "6,\\\\Show - Statistic \\\\ ", -1, timer);
+                x8--;
+            }
+            byte x4 = 1, y4 = 9;
+
+            while (x4 != 11)
+            {
+                Setposandwrite(x4, y4, " 7,//Exit     //", -1, timer);
+                x4++;
+
+            }
+            byte x9 = 50, y9 = 9;
+            while (x9 != 29)
+            {
+                Setposandwrite(x9, y9, "8,\\\\Obout us         \\\\ ", -1, timer);
+                x9--;
+            }
+            byte x10 = 50, y10 = 10;
+            byte x5 = 1, y5 = 10;
+
+            while (x5 != 11)
+            {
+                Setposandwrite(x5, y5, " 9,//Register //", -1, timer);
+                x5++;
+
+            }
+            while (x10 != 28)
+            {
+                Setposandwrite(x10, y10, "10,\\\\Backup - Restore \\\\ ", -1, timer);
+                x10--;
+            }
+            Setposandwrite(3, 12, ">> Option :", -1, 1000);
+
         }
 
         static void Take_and_write()                                              //Take and write info into file, 2 in 1
@@ -665,6 +758,40 @@ namespace Dormitory_console_0._0._2
                 Console.WriteLine("Opps , I have no information about him !\n");
             }
         }
+        static void Find_2(string path, string key_word, int col)                              //Find by detail info
+        {
+            byte els = 0;
+            int maxLength = 15;
+            string[,] sv2 = ReLoad_Read_file(path);
+            Console.WriteLine("\n   Name".PadRight(maxLength) +
+                                  "  Age".PadRight(maxLength) +
+                                  "  Class".PadRight(maxLength) +
+                                  "  SSN".PadRight(maxLength) +
+                                  "  Room".PadRight(maxLength - 6) +
+                                  " Time");
+
+            for (int i = 0; i < sv2.Length / 5; i++)
+            {
+
+                if (sv2[i, col].Contains(key_word))
+                {
+                    Console.WriteLine("   " + sv2[i, 0].PadRight(maxLength - 2  ) +
+                        sv2[i, 1].PadRight(maxLength - 1) +
+                        sv2[i, 2].PadRight(maxLength) +
+                        sv2[i, 3].PadRight(maxLength  + 1 ) +
+                        sv2[i, 4]);
+
+                }
+            }
+            Console.WriteLine();
+            if (els == sv2.Length / 5)
+            {
+                Console.SetCursorPosition(8, 17);
+                Console.WriteLine("Opps, There's no name like this in this dorm !\n");
+            }
+        }
+        //    for (int i = 0; i<sv2.Length / 5; i++)
+        //    {
         static void Find_info(string path)                                                        //Find_info
         {
             string check;
@@ -690,7 +817,7 @@ namespace Dormitory_console_0._0._2
                 {
                     Console.Write("\n\tGive me the name: ");
                     string name = Console.ReadLine();
-                    Find_(path, name, 0);
+                    Find_2(path, name, 0);
                     break;
                 }
                 else if (check == "s")
@@ -1103,6 +1230,7 @@ namespace Dormitory_console_0._0._2
                 recover[l, 4] = reco[l].Split(',')[4].Trim();
             }
             //Console.WriteLine("recovery array !");
+            read_file_his.Close();
             return recover;
 
         }
@@ -1515,9 +1643,7 @@ namespace Dormitory_console_0._0._2
                     Console.ReadKey();
                 }
             }
-
         }
-
         
         static void loading()
         {
@@ -1525,12 +1651,12 @@ namespace Dormitory_console_0._0._2
             while (true)
             {
                 Console.CursorVisible = false;
-                Thread.Sleep(1000);
+                Thread.Sleep(800);
                 Setposandwrite(5, 7, " ", 30, 1);
                 Setposandwrite(5, 7, " Connecting to sever.", -1);
-                Setposandwrite(5, 7, " Connecting to sever..", -1, 1000);
-                Setposandwrite(5, 7, " Connecting to sever...", -1, 1000);
-                Setposandwrite(5, 7, " Connecting to sever....", -1, 1000);
+                Setposandwrite(5, 7, " Connecting to sever..", -1, 900);
+                Setposandwrite(5, 7, " Connecting to sever...", -1, 900);
+                Setposandwrite(5, 7, " Connecting to sever....", -1, 900);
                 time++;
                 if (time == 3)
                 {
@@ -1542,11 +1668,9 @@ namespace Dormitory_console_0._0._2
         /// Our main actor, control all of these function 
         /// </summary>
         /// <param name="lovecrush"></param>
-        static void Main(string[] lovecrush)                                         //Main
+        static void Main(string[] lovecrush)                                      //Main
         {
-            //Encoding
-            Console.InputEncoding = Encoding.UTF8;
-            Console.OutputEncoding = Encoding.UTF8;
+            
 
             // Start
             string path = "C:/Users/my pc/Documents/GitHub/Dormitory-console-application-for-management/sv.txt";
@@ -1558,6 +1682,9 @@ namespace Dormitory_console_0._0._2
             //Menu 
             //Login();
             //loading();
+            Console.Clear();
+            //menu_move();
+            //Console.ReadKey(false);
             Console.CursorVisible = true;
             while (true)
             {
@@ -1579,9 +1706,9 @@ namespace Dormitory_console_0._0._2
                         Console.Write("\tContinue finding someone...or return Menu (y/n) ");
                         if (Console.ReadLine() == "y")
                         {
-                            Find_info(path);
+                            Find_info(path);                                                   
                         }
-                        else { break; }
+                        else { break; }                                      
                     }
                     Console.Clear();
                 }
@@ -1603,10 +1730,10 @@ namespace Dormitory_console_0._0._2
                     if (check1 == "1")
                     {
                         Del_array(path);
-                    }
+                    }                                         
                     else if (check1 == "2")
                     {
-                        
+                    
                         delele_by_name_and_write_file(path);
                         
                     }
@@ -1663,7 +1790,9 @@ namespace Dormitory_console_0._0._2
                                     "\n\tWe believe that our program is the ideal choice for dorm managers " +
                                     "\n\tlooking to streamline their operations and ensure that students are comfortable and \n\thappy in " +
                                     "their living environment.");
+                    Console.CursorVisible = false;
                     Console.ReadKey();
+                    Console.CursorVisible = true;
                     Console.Clear();
                 }
                 else if (check == "10")
@@ -1704,7 +1833,7 @@ namespace Dormitory_console_0._0._2
                 {
                     Login_for_regis();
                     Register();
-                }
+                }                                 
                 else                           
                 {
                     Console.Write("\n\tChoose an option by enter number from 1 to 9\n     You got it, Right !");
@@ -1717,4 +1846,4 @@ namespace Dormitory_console_0._0._2
             }
         }
     }
-}
+}                                                       
